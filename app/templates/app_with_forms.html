@@ -1,0 +1,45 @@
+{% load static %}
+
+<html>
+	<head>
+		<title>My app with forms</title>
+        <link rel="stylesheet" href="{% static "css/bulma.min.css" %}">
+        <link rel="stylesheet" href="{% static "css/main.css" %}">
+	</head>
+	<body>
+		<div class="container" id="app">
+            <h1 class="title">My Projects</h1>
+            <project-list inline-template>
+                <div v-cloak class="columns control">
+                    <div class="column" v-for="project in projects" :key="project.pk">
+                        <project v-bind:project="project"></project>
+                    </div>
+                </div>
+			</project-list>
+
+            <h1 class="title">Add a Project</h1>
+            <form v-on:submit.prevent="addProject" @keydown="form.errors.clear($event.target.name)">
+                <div class="field">
+                  <label for="name" class="label">Name</label>
+                  <div class="control">
+                      <input class="input" id="name" name="name" placeholder="Enter a project Name" v-model="form.name">
+                      <span v-cloak class="help is-danger" v-if="form.errors.has('name')" v-text="form.errors.get('name')"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="description" class="label">Description</label>
+                  <div class="control">
+                      <input class="input" name="description" id="description" placeholder="Enter a Description" v-model="form.description">
+                      <span v-cloak class="help is-danger" v-if="form.errors.has('description')" v-text="form.errors.get('description')"></span>
+                  </div>
+                </div>
+                <div class="control">
+                    <button class="button is-primary" v-bind:disabled="form.errors.any()">Submit</button>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript" src="{% static "js/vue.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/axios.min.js" %}"></script>
+		<script type="text/javascript" src="{% static "js/main.js" %}"></script>
+	</body>
+</html>

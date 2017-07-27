@@ -27,7 +27,8 @@ class Projects(View):
         data = json.loads(request.body)
         pk = data.get('pk')
         Project.objects.get(pk=pk).delete()
-        return HttpResponse({'status': 'ok'}, content_type="application/json")
+        response = json.dumps({'status': 'ok'})
+        return HttpResponse(response, content_type="application/json")
 
     def post(self, request):
         data = json.loads(request.body)

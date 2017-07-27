@@ -70,15 +70,15 @@ Vue.component('project', {
 		<article class="message">
 		  <div class="message-header">
 			<p v-text="project.fields.name"></p>
-			<button v-on:click.prevent="deleteProject(project.pk)" class="delete"></button>
+			<button v-on:click="deleteProject()" class="delete"></button>
 		  </div>
 		  <div class="message-body" v-text="project.fields.description">
 		  </div>
 		</article>`,
 	methods: {
-        deleteProject(pk) {
+        deleteProject() {
             axios.delete('/projects/', {
-                data: { pk: pk }
+                data: { pk: this.project.pk }
             })
 			.then(response => Event.$emit("delete", this.project))
 			.catch(response => console.log('error: ' + response))

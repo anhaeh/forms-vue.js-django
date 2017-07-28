@@ -17,3 +17,6 @@ Run application
 
     $python manage.py runserver
 
+3. Run app in browser::
+
+    http://localhost:8000/

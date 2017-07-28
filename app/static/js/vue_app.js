@@ -1,7 +1,6 @@
-/* classes */
-
 window.Event = new Vue();
 
+/* generic classes */
 class Errors {
 	constructor() {
 		this.errors = {};
@@ -38,7 +37,7 @@ class Form {
 			this[field] = '';
 		}
 	}
-	data () {
+	data() {
 		let data = Object.assign({}, this);
 		delete data.originalData;
 		delete data.errors;
@@ -57,7 +56,7 @@ class Form {
 		if (data.errors) {
 			this.errors.set(data.errors);
 		} else {
-			Event.$emit("submit", data[0]);
+			Event.$emit("submit", data);
 			this.reset();
 		}
 	}
@@ -92,22 +91,17 @@ Vue.component('project-list', {
 			projects: []
 		}
 	},
-	methods: {
-		getProjects() {
-			axios.get('/projects/')
-			.then(response => this.projects = response.data)
-			.catch(response => console.log('error: '+ response))
-		}
-    },
 	mounted() {
-		this.getProjects();
+		axios.get('/projects/')
+		.then(response => this.projects = response.data)
+		.catch(response => console.log('error: '+ response))
 	},
 	created() {
 		Event.$on("delete", (project) => {
 			let index = this.projects.indexOf(project);
 			this.projects.splice(index, 1);
 		});
-		Event.$on("submit", (project) => this.projects.push(project) );
+		Event.$on("submit", (data) => this.projects.push(data[0]) );
 	},
 });
 

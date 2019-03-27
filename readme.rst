@@ -11,7 +11,7 @@ Run application
 -----------
 1. Install requirements::
 
-   $pip install requirements.txt
+   $pip install -r requirements.txt
 
 2. Run server::
 
